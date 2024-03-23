@@ -8,7 +8,6 @@ from django.contrib.auth.forms import (
     UserChangeForm,
     UserCreationForm,
 )
-from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db import router, transaction
 from django.http import Http404, HttpResponseRedirect
@@ -32,9 +31,8 @@ class UserAdmin(admin.ModelAdmin):
     change_user_password_template = None
     fieldsets = (
         (None, {"fields": ("first_name", "email", "password")}),
-        (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions",),},),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
-    )
+        (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions",)}),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),)
     add_fieldsets = (
         (
             None,
@@ -182,12 +180,7 @@ class UserAdmin(admin.ModelAdmin):
 
         request.current_app = self.admin_site.name
 
-        return TemplateResponse(
-            request,
-            self.change_user_password_template
-            or "admin/auth/user/change_password.html",
-            context,
-        )
+        return TemplateResponse(request, self.change_user_password_template or "admin/auth/user/change_password.html", context,)
 
     def response_add(self, request, obj, post_url_continue=None):
         """
