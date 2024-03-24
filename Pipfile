@@ -8,6 +8,7 @@ django = "*"
 python-decouple = "*"
 dj-database-url = "*"
 flake8 = "*"
+pillow = "*"
 
 [dev-packages]
 flake8 = "*"
