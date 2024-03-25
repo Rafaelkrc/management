@@ -6,6 +6,9 @@ class Countries(models.Model):
     abbreviation = models.CharField(max_length=2)
     continent = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.country
+
 
 class State(models.Model):
     state = models.CharField(max_length=50)
@@ -13,15 +16,24 @@ class State(models.Model):
     country = models.ForeignKey(Countries, on_delete=models.PROTECT, related_name='state_country')
     region = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.state
+
 
 class Cities(models.Model):
     city = models.CharField(max_length=50)
     state = models.ForeignKey(State, on_delete=models.PROTECT, related_name='city_state')
 
+    def __str__(self):
+        return self.city
+
 
 class Job(models.Model):
     job = models.CharField(max_length=30)
     description_job = models.TextField()
+
+    def __str__(self):
+        return self.job
 
 
 class Employees(models.Model):
@@ -38,3 +50,6 @@ class Employees(models.Model):
     position_job = models.ForeignKey(Job, on_delete=models.PROTECT, related_name='employees_job', blank=True, null=True)
     date_of_registration = models.DateTimeField(auto_now_add=True)
     photo = models.ImageField(upload_to='employees/', blank=True, null=True)
+
+    def __str__(self):
+        return self.full_name
